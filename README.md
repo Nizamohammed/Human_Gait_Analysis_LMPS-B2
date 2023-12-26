@@ -14,8 +14,11 @@ After downloading the binary file please place these files into the same folder 
 
 - Packages required importing:
   - openzen
+  - PyQt5.QtWidgets (QApplication, QMainWindow)
+  - pyqtgraph
+  - pyqtgraph.Qt (QtCore, QtGui)
   - os
   - sys
+  - scipy.signal (butter, filtfilt)
   - time
   - csv
-
