@@ -69,7 +69,7 @@ error, sensor = client.obtain_sensor(sensor_desc_connect)
 # or connect to a sensor by COM
 # error, sensor = client.obtain_sensor_by_name("WindowsDevice", "//./COM25", 921600)=-098uyhgv  `   
 # or connect to a Bluetooth sensor (LPMS-B2)
-#error, sensor = client.obtain_sensor_by_name("Bluetooth", "00:04:3E:53:E9:9F", 115200)
+# error, sensor = client.obtain_sensor_by_name("Bluetooth", "00:04:3E:53:E9:9F", 115200)
 
 if not error == openzen.ZenSensorInitError.NoError:
     print ("Error connecting to sensor")
@@ -129,8 +129,6 @@ print("Sampling rate: {}".format(freq))
 # print("CanHeartbeat: {}".format(CanHeartbeat))
 
 print()
-
-
 
 ## load the alignment matrix from the sensor
 ## some sensors don't support this (for example IG1, BE1)
@@ -214,15 +212,15 @@ def data():
         zaxis.append(imu_data.a[2])
         Accl_Mod = []
         Accl_Mod.append(math.sqrt(((imu_data.a[0])**2)+((imu_data.a[1])**2)+((imu_data.a[2])**2)))
-        #xcurve.setData(xaxis)
-        #ycurve.setData(yaxis)
-        #zcurve.setData(zaxis)
-        #xEuler.append(imu_data.r[0])
-        #yEuler.append(imu_data.r[1])
-        #zEuler.append(imu_data.r[2])
-        #Excurve.setData(xEuler)
-        #Eycurve.setData(yEuler)
-        #Ezcurve.setData(zEuler)
+        xcurve.setData(xaxis)
+        ycurve.setData(yaxis)
+        zcurve.setData(zaxis)
+        xEuler.append(imu_data.r[0])
+        yEuler.append(imu_data.r[1])
+        zEuler.append(imu_data.r[2])
+        Excurve.setData(xEuler)
+        Eycurve.setData(yEuler)
+        Ezcurve.setData(zEuler)
     ''' print ("xEuler: {} deg/s".format(imu_data.r[0]))
         print ("yEuler: {} deg/s".format(imu_data.r[1]))
         print ("zEuler: {} deg/s".format(imu_data.r[2]))
@@ -241,15 +239,15 @@ def data():
     append_to_csv_Euler(Euler_data)    
 
 app = QtGui.QApplication([])
-#Awin = pg.PlotWidget(title="Accelometer axis")
-#Ewin = pg.PlotWidget(title="Euler Angles")
-#p = win.addPlot()
-#xcurve = Awin.plot(pen = 'r')
-#ycurve = Awin.plot(pen = 'b')
-#zcurve = Awin.plot(pen = 'g')
-#Excurve = Ewin.plot(pen = 'r')
-#Eycurve = Ewin.plot(pen = 'b')
-#Ezcurve = Ewin.plot(pen = 'g')
+Awin = pg.PlotWidget(title="Accelometer axis")
+Ewin = pg.PlotWidget(title="Euler Angles")
+p = win.addPlot()
+xcurve = Awin.plot(pen = 'r')
+ycurve = Awin.plot(pen = 'b')
+zcurve = Awin.plot(pen = 'g')
+Excurve = Ewin.plot(pen = 'r')
+Eycurve = Ewin.plot(pen = 'b')
+Ezcurve = Ewin.plot(pen = 'g')
   
 timer = QtCore.QTimer()
 timer.timeout.connect(data)
@@ -257,24 +255,6 @@ timer.start(100)
 #Awin.show()
 #Ewin.show()
 app.exec()
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 print ("Streaming of sensor data complete")
 sensor.release()
